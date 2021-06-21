@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using TransactionImportAPI.Configurations;
 using TransactionImportAPI.Domain;
 using TransactionImportAPI.Model;
 using TransactionImportAPI.Persistence;
@@ -37,10 +38,10 @@ namespace TransactionImportAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TransactionImportAPI", Version = "v1" });
             });
 
-            services.AddDbContext<TransactionDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TransactionDB")));
+            services.AddPersistence(Configuration);
 
-            services.AddScoped<IUploadTransactionService, UploadTransactionService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

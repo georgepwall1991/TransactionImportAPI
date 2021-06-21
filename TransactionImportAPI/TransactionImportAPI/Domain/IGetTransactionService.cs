@@ -7,10 +7,10 @@ namespace TransactionImportAPI.Domain
 {
     public interface IGetTransactionService
     {
-        public List<Data.DTO.Transaction> GetAllTransactions();
-        public List<Data.DTO.Transaction> GetAllTransactionsByCurrency();
-        public List<Data.DTO.Transaction> GetAllTransactionsByDateRange(DateTime startDate, DateTime endDate);
-        public List<Data.DTO.Transaction> GetAllTransactionsByTransactionStatus(string transactionStatus);
+        public Task<List<Data.DTO.Transaction>> GetAllTransactions();
+        public Task<List<Data.DTO.Transaction>> GetAllTransactionsByCurrency(string ISOCode);
+        public Task<List<Data.DTO.Transaction>> GetAllTransactionsByDateRange(DateTime startDate, DateTime endDate);
+        public Task<List<Data.DTO.Transaction>> GetAllTransactionsByTransactionStatus(string transactionStatus);
 
     }
 }

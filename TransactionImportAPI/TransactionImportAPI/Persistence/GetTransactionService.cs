@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TransactionImportAPI.Data.DTO;
 using TransactionImportAPI.Domain;
 using TransactionImportAPI.Model;
@@ -17,24 +18,31 @@ namespace TransactionImportAPI.Persistence
             _transactionDbContext = transactionDbContext;
         }
 
-        public List<Transaction> GetAllTransactions()
+        public async Task<List<Transaction>> GetAllTransactions()
         {
-            throw new NotImplementedException();
+            return await this._transactionDbContext.Transactions.ToListAsync();
         }
 
-        public List<Transaction> GetAllTransactionsByCurrency()
+        public async Task<List<Transaction>> GetAllTransactionsByCurrency(string ISOCode)
         {
-            throw new NotImplementedException();
+            // Validation to be done upfront on the front end 
+            return await this._transactionDbContext.Transactions
+                .Where(o => o.ISOCode.Select(country => country.ISOCode).Contains(ISOCode))
+                .ToListAsync();
         }
 
-        public List<Transaction> GetAllTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        public async Task<List<Transaction>> GetAllTransactionsByDateRange(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            return await this._transactionDbContext.Transactions
+                .Where(o => o.TransactionDate >= startDate && o.TransactionDate <= endDate)
+                .ToListAsync();
         }
 
-        public List<Transaction> GetAllTransactionsByTransactionStatus(string transactionStatus)
+        public async Task<List<Transaction>> GetAllTransactionsByTransactionStatus(string transactionStatus)
         {
-            throw new NotImplementedException();
+            return await this._transactionDbContext.Transactions
+                .Where(o => o.TransactionStatus.Select(status => status.TransactionStatusType).Contains(transactionStatus))
+                .ToListAsync();
         }
     }
 }

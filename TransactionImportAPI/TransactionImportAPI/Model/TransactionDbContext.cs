@@ -9,6 +9,11 @@ namespace TransactionImportAPI.Model
 {
     public class TransactionDbContext : DbContext
     {
+        public TransactionDbContext(DbContextOptions<TransactionDbContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<TransactionStatus> TransactionStatuses { get; set; }
