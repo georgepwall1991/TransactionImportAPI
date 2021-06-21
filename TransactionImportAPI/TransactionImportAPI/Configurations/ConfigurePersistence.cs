@@ -15,8 +15,9 @@ namespace TransactionImportAPI.Configurations
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = configuration.GetConnectionString("TransactionDB");
             services.AddDbContext<TransactionDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("TransactionDB")));
+                options.UseSqlServer(connectionString));
 
             services.AddScoped<IUploadTransactionService, UploadTransactionService>();
             services.AddScoped<IGetTransactionService, GetTransactionService>();

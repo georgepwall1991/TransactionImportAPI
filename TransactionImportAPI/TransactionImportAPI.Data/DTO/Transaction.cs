@@ -11,7 +11,7 @@ namespace TransactionImportAPI.Data.DTO
         [Column(Order = 1)]
         public string TransactionIdentifier { get; set; }
 
-        [Column(Order = 2)]
+        [Column(TypeName = "decimal(10,2)")]
         public decimal TransactionAmount { get; set; }
 
         [Column(Order = 3)]
