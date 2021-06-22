@@ -15,8 +15,6 @@ namespace TransactionImportAPI.Model
         }
 
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<TransactionStatus> TransactionStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

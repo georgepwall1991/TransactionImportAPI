@@ -15,12 +15,12 @@ namespace TransactionImportAPI.Data.DTO
         public decimal TransactionAmount { get; set; }
 
         [Column(Order = 3)]
-        public ICollection<Country> ISOCode { get; set; }
+        public string ISOCode { get; set; }
 
         [Column(Order = 4)]
         public DateTime TransactionDate { get; set; }
 
         [Column(Order = 5)]
-        public ICollection<TransactionStatus> TransactionStatus { get; set; }
+        public string TransactionStatus { get; set; }
     }
 }

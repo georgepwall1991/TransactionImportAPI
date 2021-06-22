@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TransactionImportAPI.Data.DTO;
 using TransactionImportAPI.Domain;
 using TransactionImportAPI.Model;
@@ -25,9 +25,9 @@ namespace TransactionImportAPI.Persistence
 
         public async Task<List<Transaction>> GetAllTransactionsByCurrency(string ISOCode)
         {
-            // Validation to be done upfront on the front end 
+            // Validation to be done upfront on the front end
             return await this._transactionDbContext.Transactions
-                .Where(o => o.ISOCode.Select(country => country.ISOCode).Contains(ISOCode))
+                .Where(o => o.ISOCode.Contains(ISOCode))
                 .ToListAsync();
         }
 
@@ -41,7 +41,7 @@ namespace TransactionImportAPI.Persistence
         public async Task<List<Transaction>> GetAllTransactionsByTransactionStatus(string transactionStatus)
         {
             return await this._transactionDbContext.Transactions
-                .Where(o => o.TransactionStatus.Select(status => status.TransactionStatusType).Contains(transactionStatus))
+                .Where(o => o.TransactionStatus.Contains(transactionStatus))
                 .ToListAsync();
         }
     }

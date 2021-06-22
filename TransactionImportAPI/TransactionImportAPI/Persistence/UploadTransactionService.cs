@@ -11,16 +11,26 @@ namespace TransactionImportAPI.Persistence
 {
     public class UploadTransactionService : IUploadTransactionService
     {
-        private readonly TransactionDbContext _transactionDBContext;
+        private readonly TransactionDbContext _transactionDbContext;
 
-        public UploadTransactionService(TransactionDbContext transactionDBContext)
+        public UploadTransactionService(TransactionDbContext transactionDbContext)
         {
-            _transactionDBContext = transactionDBContext;
+            _transactionDbContext = transactionDbContext;
         }
 
-        public Task<bool> UploadTransaction(Transaction transaction)
+        public async Task<bool> UploadTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            await _transactionDbContext.Transactions.AddAsync(new Transaction
+            {
+                ISOCode = transaction.ISOCode,
+                TransactionAmount = transaction.TransactionAmount,
+                TransactionDate = transaction.TransactionDate,
+                TransactionStatus = transaction.TransactionStatus,
+                TransactionIdentifier = transaction.TransactionIdentifier
+            });
+
+            var changesSaved = await _transactionDbContext.SaveChangesAsync();
+            return changesSaved > 0;
         }
     }
 }
