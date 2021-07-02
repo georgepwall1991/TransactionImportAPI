@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,21 +11,22 @@ using TransactionImportAPI.Domain;
 namespace TransactionImportAPI.Controllers
 {
     [ApiController]
+    [Route("Api")]
     public class GetTransactionsController : ControllerBase
     {
-        private readonly ILogger<GetTransactionsController> _logger;
         private readonly IGetTransactionService _getTransactionService;
+        private readonly ILogger<GetTransactionsController> _logger;
 
         public GetTransactionsController(
-            ILogger<GetTransactionsController> _logger,
-            IGetTransactionService _getTransactionService)
+            ILogger<GetTransactionsController> logger,
+            IGetTransactionService getTransactionService)
         {
-            this._logger = _logger;
-            this._getTransactionService = _getTransactionService;
+            _logger = logger;
+            _getTransactionService = getTransactionService;
         }
 
         [HttpGet]
-        [Route("Api/GetAllTransactions")]
+        [Route("GetAllTransactions")]
         public async Task<IActionResult> Get()
         {
             var allTransactions = await _getTransactionService.GetAllTransactions();
@@ -35,8 +37,8 @@ namespace TransactionImportAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Api/GetAllTransactionsByDate")]
-        public async Task<IActionResult> Get([FromBody] GetTransactionsRequestDate request)
+        [Route("GetAllTransactionsByDate")]
+        public async Task<IActionResult> Get([FromBody] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
         {
             if (!DateTime.TryParseExact(
                 request.TransactionStartDate,
@@ -55,11 +57,31 @@ namespace TransactionImportAPI.Controllers
                 return BadRequest();
 
             var allTransactions = await _getTransactionService.GetAllTransactionsByDateRange(startDate, endDate);
-            if (!allTransactions.Any()) _logger.LogInformation($"No transactions - Please check database for transactions between {request.TransactionStartDate} and {request.TransactionEndDate}");
+            if (!allTransactions.Any())
+                _logger.LogInformation(
+                    $"No transactions - Please check database for transactions between {request.TransactionStartDate} and {request.TransactionEndDate}");
 
-            _logger.LogInformation($"{allTransactions.Count} Transaction Values returned to user between {request.TransactionStartDate} and {request.TransactionEndDate}");
+            _logger.LogInformation(
+                $"{allTransactions.Count} Transaction Values returned to user between {request.TransactionStartDate} and {request.TransactionEndDate}");
             return Ok(allTransactions);
         }
-        
+
+        [HttpGet]
+        [Route("GetAllTransactionsByCurrency")]
+        public async Task<IActionResult> Get([FromBody] string isoCode)
+        {
+            if (isoCode.Length != 3 || !Regex.IsMatch(isoCode, "[a-zA-Z]"))
+                return BadRequest("Incorrect currency ISO Code");
+
+            var allTransactions = await _getTransactionService.GetAllTransactionsByCurrency(isoCode);
+            if (!allTransactions.Any())
+                _logger.LogInformation(
+                    $"No transactions - Please check database for transactions with the ISO Code - {isoCode}");
+
+            _logger.LogInformation(
+                $"{allTransactions.Count} Transaction Values returned to user with ISO Code - {isoCode}");
+            return Ok(allTransactions);
+        }
+
     }
 }
