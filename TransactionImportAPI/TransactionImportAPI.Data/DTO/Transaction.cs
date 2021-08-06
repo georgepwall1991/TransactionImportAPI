@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace TransactionImportAPI.Data.DTO
 {
     public class Transaction
     {
-        [Key]
-        [Column(Order = 1)]
+        [BsonId]
         public string TransactionIdentifier { get; set; }
 
-        [Column(TypeName = "decimal(10,2)")]
+        [Required(ErrorMessage = "Transaction Amount is required")]
         public decimal TransactionAmount { get; set; }
 
-        [Column(Order = 3)]
+        [Required(ErrorMessage = "ISO code is required")]
         public string ISOCode { get; set; }
 
-        [Column(Order = 4)]
+        [Required(ErrorMessage = "Transaction Date is required")]
         public DateTime TransactionDate { get; set; }
 
-        [Column(Order = 5)]
+        [Required(ErrorMessage = "Transaction Status is required")]
         public string TransactionStatus { get; set; }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TransactionImportAPI.Data.DTO.Requests
 {
@@ -15,6 +12,5 @@ namespace TransactionImportAPI.Data.DTO.Requests
 
         public string TransactionStartDate { get; set; }
         public string TransactionEndDate { get; set; }
-
     }
 }

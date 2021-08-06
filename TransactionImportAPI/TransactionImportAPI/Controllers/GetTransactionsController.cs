@@ -11,15 +11,15 @@ using TransactionImportAPI.Domain;
 namespace TransactionImportAPI.Controllers
 {
     [ApiController]
-    [Route("Api")]
+    [Route("Api/GetTransactions")]
     public class GetTransactionsController : ControllerBase
     {
-        private readonly IGetTransactionService _getTransactionService;
+        private readonly ITransactionService _getTransactionService;
         private readonly ILogger<GetTransactionsController> _logger;
 
         public GetTransactionsController(
             ILogger<GetTransactionsController> logger,
-            IGetTransactionService getTransactionService)
+            ITransactionService getTransactionService)
         {
             _logger = logger;
             _getTransactionService = getTransactionService;
@@ -29,7 +29,7 @@ namespace TransactionImportAPI.Controllers
         [Route("GetAllTransactions")]
         public async Task<IActionResult> Get()
         {
-            var allTransactions = await _getTransactionService.GetAllTransactions();
+            var allTransactions = await _getTransactionService.GetAllAsync();
             if (!allTransactions.Any()) _logger.LogInformation("No transactions - Please check database");
 
             _logger.LogInformation($"{allTransactions.Count} Transaction Values returned to user");
@@ -38,7 +38,8 @@ namespace TransactionImportAPI.Controllers
 
         [HttpGet]
         [Route("GetAllTransactionsByDate")]
-        public async Task<IActionResult> Get([FromBody] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
+        public async Task<IActionResult>
+            Get([FromBody] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
         {
             if (!DateTime.TryParseExact(
                 request.TransactionStartDate,
@@ -82,6 +83,5 @@ namespace TransactionImportAPI.Controllers
                 $"{allTransactions.Count} Transaction Values returned to user with ISO Code - {isoCode}");
             return Ok(allTransactions);
         }
-
     }
 }
