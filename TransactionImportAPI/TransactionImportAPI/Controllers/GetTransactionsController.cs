@@ -40,23 +40,7 @@ namespace TransactionImportAPI.Controllers
         [Route("GetAllTransactionsByDate")]
         public async Task<IActionResult>  Get([FromQuery] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
         {
-            if (!DateTime.TryParseExact(
-                request.TransactionStartDate,
-                "dd/MM/yyyy",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out var startDate))
-                return BadRequest();
-
-            if (!DateTime.TryParseExact(
-                request.TransactionEndDate,
-                "dd/MM/yyyy",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None,
-                out var endDate))
-                return BadRequest();
-
-            var allTransactions = await _getTransactionService.GetAllTransactionsByDateRange(startDate, endDate);
+            var allTransactions = await _getTransactionService.GetAllTransactionsByDateRange(request.TransactionStartDate, request.TransactionEndDate);
             if (!allTransactions.Any())
                 _logger.LogInformation(
                     $"No transactions - Please check database for transactions between {request.TransactionStartDate} and {request.TransactionEndDate}");
