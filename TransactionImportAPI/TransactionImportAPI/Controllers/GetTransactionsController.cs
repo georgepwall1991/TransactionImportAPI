@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -58,7 +57,6 @@ namespace TransactionImportAPI.Controllers
         {
             try
             {
-
                 var allTransactions = await _getTransactionService.GetAllTransactionsByCurrency(isoCode);
                 if (!allTransactions.Any())
                 {

@@ -1,10 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
-using Moq;
 using TransactionImportAPI.Data.DTO;
-using TransactionImportAPI.Domain;
 using TransactionImportAPI.Persistence;
 using Xunit;
 
@@ -26,9 +23,9 @@ namespace TransactionImportAPI.AutomatedTests
             var transactions = await service.GetAllTransactionsByCurrency("GBP");
             Assert.NotEmpty(transactions);
         }
-         
+
         /* Logic is that if ISO Code isn't 3 digits long or contains a non alphabetic character, exception is thrown.
-         In Logic bubbles up to controller and exception is caught and thrown a BadRequest(exp.Message) s*/ 
+         In Logic bubbles up to controller and exception is caught and thrown a BadRequest(exp.Message) s*/
         [Fact]
         public async Task TestGreater3DigitISOCode()
         {
