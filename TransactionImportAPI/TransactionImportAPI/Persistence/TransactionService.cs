@@ -63,7 +63,7 @@ namespace TransactionImportAPI.Persistence
         public async Task<List<Transaction>> GetAllTransactionsByCurrency(string isoCode)
         {
             if (isoCode.Length != 3 || !Regex.IsMatch(isoCode, "[a-zA-Z]"))
-                throw new Exception("Incorrect ISO Code");
+                throw new Exception($"Incorrect ISO Code - {isoCode} either isn't 3 digits in length or has non Alphabetical characters");
             
             return await _transaction
                 .Find(c => c.ISOCode.Equals(isoCode))
