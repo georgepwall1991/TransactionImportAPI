@@ -38,8 +38,7 @@ namespace TransactionImportAPI.Controllers
 
         [HttpGet]
         [Route("GetAllTransactionsByDate")]
-        public async Task<IActionResult>
-            Get([FromBody] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
+        public async Task<IActionResult>  Get([FromQuery] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
         {
             if (!DateTime.TryParseExact(
                 request.TransactionStartDate,
@@ -69,7 +68,7 @@ namespace TransactionImportAPI.Controllers
 
         [HttpGet]
         [Route("GetAllTransactionsByCurrency")]
-        public async Task<IActionResult> Get([FromBody] string isoCode)
+        public async Task<IActionResult> Get(string isoCode)
         {
             if (isoCode.Length != 3 || !Regex.IsMatch(isoCode, "[a-zA-Z]"))
                 return BadRequest("Incorrect currency ISO Code");

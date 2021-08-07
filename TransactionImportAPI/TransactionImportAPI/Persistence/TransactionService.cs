@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using TransactionImportAPI.Data.DTO;
+using TransactionImportAPI.Data.DTO.Requests;
 using TransactionImportAPI.Domain;
 
 namespace TransactionImportAPI.Persistence

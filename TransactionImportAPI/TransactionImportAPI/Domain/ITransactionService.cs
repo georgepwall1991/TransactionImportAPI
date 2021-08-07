@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TransactionImportAPI.Data.DTO;
+using TransactionImportAPI.Data.DTO.Requests;
 
 namespace TransactionImportAPI.Domain
 {
