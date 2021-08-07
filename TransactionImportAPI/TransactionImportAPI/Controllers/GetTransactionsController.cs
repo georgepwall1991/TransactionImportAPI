@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -55,17 +56,25 @@ namespace TransactionImportAPI.Controllers
         [Route("GetAllTransactionsByCurrency")]
         public async Task<IActionResult> Get(string isoCode)
         {
-            if (isoCode.Length != 3 || !Regex.IsMatch(isoCode, "[a-zA-Z]"))
-                return BadRequest("Incorrect currency ISO Code");
+            try
+            {
 
-            var allTransactions = await _getTransactionService.GetAllTransactionsByCurrency(isoCode);
-            if (!allTransactions.Any())
+                var allTransactions = await _getTransactionService.GetAllTransactionsByCurrency(isoCode);
+                if (!allTransactions.Any())
+                {
+                    _logger.LogInformation(
+                        $"No transactions - Please check database for transactions with the ISO Code - {isoCode}");
+                    return BadRequest("No values saved.");
+                }
+
                 _logger.LogInformation(
-                    $"No transactions - Please check database for transactions with the ISO Code - {isoCode}");
-
-            _logger.LogInformation(
-                $"{allTransactions.Count} Transaction Values returned to user with ISO Code - {isoCode}");
-            return Ok(allTransactions);
+                    $"{allTransactions.Count} Transaction Values returned to user with ISO Code - {isoCode}");
+                return Ok(allTransactions);
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(exp.Message);
+            }
         }
     }
 }
