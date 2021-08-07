@@ -40,7 +40,7 @@ namespace TransactionImportAPI.AutomatedTests
             };
             var options = Options.Create(sampleOptions);
             var service = new TransactionService(options);
-            await Assert.ThrowsAsync<Exception>(() => service.GetAllTransactionsByCurrency("GBP"));
+            await Assert.ThrowsAsync<Exception>(() => service.GetAllTransactionsByCurrency("GBPP"));
         }
     }
 }
