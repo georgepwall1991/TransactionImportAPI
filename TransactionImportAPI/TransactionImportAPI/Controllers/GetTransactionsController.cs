@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -38,9 +36,12 @@ namespace TransactionImportAPI.Controllers
 
         [HttpGet]
         [Route("GetAllTransactionsByDate")]
-        public async Task<IActionResult>  Get([FromQuery] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
+        public async Task<IActionResult>
+            Get([FromQuery] GetTransactionsRequestDate request) // doesn't always handle casting string gracefully - created request object
         {
-            var allTransactions = await _getTransactionService.GetAllTransactionsByDateRange(request.TransactionStartDate, request.TransactionEndDate);
+            var allTransactions =
+                await _getTransactionService.GetAllTransactionsByDateRange(request.TransactionStartDate,
+                    request.TransactionEndDate);
             if (!allTransactions.Any())
                 _logger.LogInformation(
                     $"No transactions - Please check database for transactions between {request.TransactionStartDate} and {request.TransactionEndDate}");

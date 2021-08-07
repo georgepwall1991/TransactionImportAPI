@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionImportAPI", "Tra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionImportAPI.Data", "TransactionImportAPI.Data\TransactionImportAPI.Data.csproj", "{0870F3AC-7B79-4339-B6EA-22BF4E9F78E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionImportAPI.AutomatedTests", "TransactionImportAPI.AutomatedTests\TransactionImportAPI.AutomatedTests.csproj", "{4F215663-A49C-40F3-9D74-A2D44ED07D4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0870F3AC-7B79-4339-B6EA-22BF4E9F78E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0870F3AC-7B79-4339-B6EA-22BF4E9F78E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0870F3AC-7B79-4339-B6EA-22BF4E9F78E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F215663-A49C-40F3-9D74-A2D44ED07D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F215663-A49C-40F3-9D74-A2D44ED07D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F215663-A49C-40F3-9D74-A2D44ED07D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F215663-A49C-40F3-9D74-A2D44ED07D4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

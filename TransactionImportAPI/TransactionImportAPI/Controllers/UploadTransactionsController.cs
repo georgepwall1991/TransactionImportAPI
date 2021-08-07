@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TransactionImportAPI.Data.DTO;
 using TransactionImportAPI.Domain;
-using ILogger = DnsClient.Internal.ILogger;
 
 namespace TransactionImportAPI.Controllers
-{        
+{
     [ApiController]
     [Route("Api/UploadTransactions")]
     public class UploadTransactionsController : ControllerBase
@@ -14,12 +13,13 @@ namespace TransactionImportAPI.Controllers
         private readonly ILogger<UploadTransactionsController> _logger;
         private readonly ITransactionService _transactionService;
 
-        public UploadTransactionsController(ILogger<UploadTransactionsController> logger, ITransactionService transactionService)
+        public UploadTransactionsController(ILogger<UploadTransactionsController> logger,
+            ITransactionService transactionService)
         {
             _logger = logger;
             _transactionService = transactionService;
         }
-        
+
         [HttpPost]
         [Route("UploadTransaction")]
         public async Task<IActionResult> Upload([FromBody] Transaction transaction)
@@ -30,6 +30,5 @@ namespace TransactionImportAPI.Controllers
             _logger.LogInformation($"{transactionPosted} Transaction Values returned to user");
             return Ok(transactionPosted);
         }
-
     }
 }

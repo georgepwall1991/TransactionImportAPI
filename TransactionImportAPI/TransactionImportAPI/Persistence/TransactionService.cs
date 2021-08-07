@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using TransactionImportAPI.Data.DTO;
-using TransactionImportAPI.Data.DTO.Requests;
 using TransactionImportAPI.Domain;
 
 namespace TransactionImportAPI.Persistence
@@ -63,6 +62,9 @@ namespace TransactionImportAPI.Persistence
 
         public async Task<List<Transaction>> GetAllTransactionsByCurrency(string isoCode)
         {
+            if (isoCode.Length != 3 || !Regex.IsMatch(isoCode, "[a-zA-Z]"))
+                throw new Exception("Incorrect ISO Code");
+            
             return await _transaction
                 .Find(c => c.ISOCode.Equals(isoCode))
                 .ToListAsync();

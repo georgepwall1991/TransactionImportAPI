@@ -1,14 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace TransactionImportAPI.Data.DTO
 {
     public class Transaction
     {
-        [BsonId]
-        public string TransactionIdentifier { get; set; }
+        [BsonId] public string TransactionIdentifier { get; set; }
 
         [Required(ErrorMessage = "Transaction Amount is required")]
         public decimal TransactionAmount { get; set; }
