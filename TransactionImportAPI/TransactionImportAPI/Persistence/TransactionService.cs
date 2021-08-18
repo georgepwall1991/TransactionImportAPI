@@ -19,6 +19,7 @@ namespace TransactionImportAPI.Persistence
             var client = new MongoClient(settingsValue.ConnectionString);
             var database = client.GetDatabase(settingsValue.DatabaseName);
             _transaction = database.GetCollection<Transaction>(settingsValue.TransactionCollectionName);
+            
         }
 
         public async Task DeleteAsync(string id)
