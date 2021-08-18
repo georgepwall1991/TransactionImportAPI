@@ -1,25 +1,23 @@
-import logo from './logo.svg';
+import {Button} from '@material-ui/core';
 import './App.css';
+import '@fontsource/roboto';
+import SimpleSelect from "./Controls/SimpleSelect";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <div className="flexbox-container">
+                <SimpleSelect/>
+                <br/>
+                <br/>
+                <br/>
+
+                <Button variant="outlined" color="secondary" onClick={() => alert("Imported Transactions Succesfully")}>
+                    Import API Transactions
+                </Button>
+            </div>
+        </div>
+    )
 }
 
 export default App;
