@@ -14,5 +14,6 @@ namespace TransactionImportAPI.Domain
         Task<List<Transaction>> GetAllAsync();
         Task<List<Transaction>> GetAllTransactionsByDateRange(DateTime startDate, DateTime endDate);
         Task<List<Transaction>> GetAllTransactionsByCurrency(string isoCode);
+        Task<List<Transaction>> FindNonSetTransactionIdentifiers();
     }
 }

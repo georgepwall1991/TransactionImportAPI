@@ -21,6 +21,9 @@ namespace TransactionImportAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TransactionImportAPI", Version = "v1" });
@@ -37,6 +40,9 @@ namespace TransactionImportAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TransactionImportAPI v1"));
+                app.UseCors(options => options.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
             }
 
 

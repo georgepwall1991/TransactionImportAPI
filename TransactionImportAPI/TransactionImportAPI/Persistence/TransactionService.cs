@@ -19,7 +19,6 @@ namespace TransactionImportAPI.Persistence
             var client = new MongoClient(settingsValue.ConnectionString);
             var database = client.GetDatabase(settingsValue.DatabaseName);
             _transaction = database.GetCollection<Transaction>(settingsValue.TransactionCollectionName);
-            
         }
 
         public async Task DeleteAsync(string id)
@@ -52,6 +51,11 @@ namespace TransactionImportAPI.Persistence
             return await _transaction
                 .Find(c => true)
                 .ToListAsync();
+        }
+
+        public async Task<List<Transaction>> FindNonSetTransactionIdentifiers()
+        {
+            return await _transaction.Find(c => c.TransactionIdentifier == null).ToListAsync();
         }
 
         public async Task<List<Transaction>> GetAllTransactionsByDateRange(DateTime startDate, DateTime endDate)
