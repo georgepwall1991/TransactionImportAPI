@@ -24,7 +24,7 @@ namespace TransactionImportAPI.Persistence
         public async Task DeleteAsync(string id)
         {
             await _transaction
-                .DeleteOneAsync(c => c.TransactionIdentifier == id);
+                .DeleteManyAsync(c => c.TransactionIdentifier == id);
         }
 
         public async Task UpdateAsync(string id, Transaction transaction)

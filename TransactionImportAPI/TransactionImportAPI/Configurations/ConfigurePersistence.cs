@@ -9,13 +9,12 @@ namespace TransactionImportAPI.Configurations
 {
     public static class ConfigurePersistence
     {
-        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+        public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<TransactionDatabaseConfiguration>(
                 configuration.GetSection("TransactionDatabaseConfiguration"));
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped(c => c.GetService<IMongoClient>()?.StartSession());
-            return services;
         }
     }
 }
