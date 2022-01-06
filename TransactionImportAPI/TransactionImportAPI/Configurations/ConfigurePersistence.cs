@@ -1,20 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using TransactionImportAPI.Data.DTO;
 using TransactionImportAPI.Domain;
 using TransactionImportAPI.Persistence;
 
-namespace TransactionImportAPI.Configurations
+namespace TransactionImportAPI.Configurations;
+
+public static class ConfigurePersistence
 {
-    public static class ConfigurePersistence
+    public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<TransactionDatabaseConfiguration>(
-                configuration.GetSection("TransactionDatabaseConfiguration"));
-            services.AddScoped<ITransactionService, TransactionService>();
-            services.AddScoped(c => c.GetService<IMongoClient>()?.StartSession());
-        }
+        services.Configure<TransactionDatabaseConfiguration>(
+            configuration.GetSection("TransactionDatabaseConfiguration"));
+        services.AddScoped<ITransactionService, TransactionService>();
+        services.AddScoped(c => c.GetService<IMongoClient>()?.StartSession());
     }
 }
